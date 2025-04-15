@@ -1,43 +1,38 @@
 package com.ladalee.ladalee.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
 import com.ladalee.ladalee.strategy.MoodStrategy;
 
-
-
 @Component
-@Scope(value="singleton")
+@Scope(value = "singleton")
 public class LadaleeMoodService {
 
-    @Autowired ApplicationContext applicationContext;
+    private final MoodStrategy happyMood;
+    private final MoodStrategy sadMood;
 
-    @Autowired MoodService moodService;
-
-    MoodStrategy moodStrategy;
-
-    LadaleeMoodService(){
+    @Autowired
+    public LadaleeMoodService(
+        @Qualifier("happyMood") MoodStrategy happyMood,
+        @Qualifier("sadMood") MoodStrategy sadMood
+    ) {
+        this.happyMood = happyMood;
+        this.sadMood = sadMood;
         System.out.println("Initialising Bean Ladalee Mood Service");
     }
 
     public String getMoodBasedOnActionAndPerson(String person, String action) {
 
         if (person != null && person.toLowerCase().contains("sagar")) {
-            moodStrategy=(MoodStrategy) applicationContext.getBean("sadMood") ;
-          
+            return sadMood.getMood();
         }
-    
-        else if (action != null && action.equalsIgnoreCase("Waking up")) {
+
+        if (action != null && action.equalsIgnoreCase("Waking up")) {
             return "Lazy ho sone do";
         }
-        else{
-        moodStrategy=(MoodStrategy) applicationContext.getBean("happyMood") ;
-        }
-        return moodStrategy.getMood();
-    }
-    
 
+        return happyMood.getMood();
+    }
 }
