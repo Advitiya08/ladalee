@@ -22,6 +22,8 @@ public class LadaleeMoodController {
     @Autowired
     private LadaleeMoodService ladaleeMoodService;
 
+   
+
     @GetMapping("/")
     public ResponseEntity<String> getMoodBasedOnActionAndPerson(
             @RequestParam String person,
