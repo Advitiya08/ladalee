@@ -3,6 +3,7 @@ package com.ladalee.ladalee.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import com.ladalee.ladalee.strategy.MoodStrategy;
 
@@ -22,7 +23,7 @@ public class LadaleeMoodService {
         this.sadMood = sadMood;
         System.out.println("Initialising Bean Ladalee Mood Service");
     }
-
+    @Async
     public String getMoodBasedOnActionAndPerson(String person, String action) {
 
         if (person != null && person.toLowerCase().contains("sagar")) {
