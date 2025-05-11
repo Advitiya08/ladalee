@@ -3,12 +3,14 @@ package com.ladalee.ladalee.config;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 
+import com.ladalee.ladalee.exception.CustomAsyncExceptionHandler;
 import com.ladalee.ladalee.filter.AuthFilter;
 
 import jakarta.servlet.Filter;
@@ -32,5 +34,11 @@ public class AppConfig  implements AsyncConfigurer{
         return threadPoolExecutor;
     }
 
+@Override
+@Nullable
+public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+    // TODO Auto-generated method stub
+    return new CustomAsyncExceptionHandler();
+}
     
 }
